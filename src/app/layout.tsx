@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'Татарская кухня',
-    description: 'Рецепты татарской кухни',
+    title: 'Кухня',
+    description: 'Рецепты',
 };
 
 export default function RootLayout({
