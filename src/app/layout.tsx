@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/UI/header';
 import { Providers } from '@/providers/provider';
+import { siteConfig } from '@/config/site.config';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'Кухня',
-    description: 'Рецепты',
+    title: siteConfig.title,
+    description: siteConfig.description,
 };
 
 export default function RootLayout({

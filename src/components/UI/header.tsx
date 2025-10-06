@@ -1,5 +1,6 @@
 'use client';
 
+import { siteConfig } from '@/config/site.config';
 import {
     Navbar,
     NavbarBrand,
@@ -13,52 +14,57 @@ import { usePathname } from 'next/navigation';
 
 export const Logo = () => {
     return (
-        <Image src='/logo.png' alt='Кухня' width={26} height={26} priority />
+        <Image
+            src='/logo.png'
+            alt={siteConfig.title}
+            width={26}
+            height={26}
+            priority
+        />
     );
 };
 
 export default function Header() {
     const pathname = usePathname();
 
-    const navItems = [
-        { href: '/', label: 'Рецепты' },
-        { href: '/ingredients', label: 'Ингредиенты' },
-        { href: '/about', label: 'О нас' },
-    ];
+    const getNavItems = () => {
+        return siteConfig.navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+                <NavbarItem key={item.href}>
+                    <Link
+                        href={item.href}
+                        className={`px-3 py-1 ${
+                            isActive ? 'text-blue-500' : 'text-foreground'
+                        }
+                        hover:text-blue-300
+                        hover:border
+                        hover:border-blue-300
+                        hover:rounded-md
+                        transition-colors
+                        transition-border
+                        duration-200`}
+                    >
+                        {item.label}
+                    </Link>
+                </NavbarItem>
+            );
+        });
+    };
+
     return (
         <Navbar>
             <NavbarBrand>
                 <Link href='/' className='flex gap-1'>
                     <Logo />
-                    <p className='font-bold text-inherit'>Кухня мира</p>
+                    <p className='font-bold text-inherit'>{siteConfig.title}</p>
                 </Link>
             </NavbarBrand>
+
             <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-                {navItems.map((item) => {
-                    const isActive = pathname === item.href;
-                    return (
-                        <NavbarItem key={item.href}>
-                            <Link
-                                href={item.href}
-                                className={`px-3 py-1 ${
-                                    isActive
-                                        ? 'text-blue-500'
-                                        : 'text-foreground'
-                                } 
-                                hover:text-blue-300 
-                                hover:border 
-                                hover:border-blue-300 
-                                hover:rounded-md 
-                                transition-colors 
-                                transition-border 
-                                duration-200`}
-                            >
-                                {item.label}
-                            </Link>
-                        </NavbarItem>
-                    );
-                })}
+                {getNavItems()}
             </NavbarContent>
+
             <NavbarContent justify='end'>
                 <NavbarItem className='hidden lg:flex'>
                     <Link href='#'>Логин</Link>
