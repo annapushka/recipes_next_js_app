@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@heroui/form": "^2.1.27",
+    "@heroui/input": "^2.4.28",
+    "@heroui/modal": "^2.2.24",
     "@heroui/navbar": "^2.2.25",
     "@heroui/react": "^2.8.5",
     "framer-motion": "^12.23.22",
