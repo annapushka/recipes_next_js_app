@@ -89,7 +89,7 @@ const RegistrationForm = ({ onClose }: IProps) => {
                     return null;
                 }}
             />
-            <div>
+            <div className='mt-6'>
                 <Button variant='light' onPress={onClose}>
                     Отмена
                 </Button>
