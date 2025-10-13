@@ -1,3 +1,5 @@
+'use server';
+
 import { signIn } from '@/auth/auth';
 
 export const signInWithCredentials = async (

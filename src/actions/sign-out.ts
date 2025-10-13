@@ -1,3 +1,5 @@
+'use server';
+
 import { signOut } from '@/auth/auth';
 
 export const signOutFunc = async () => {

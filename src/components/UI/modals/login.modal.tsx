@@ -1,7 +1,7 @@
 'use client';
 
 import CustomModal from '@/components/common/modal';
-import RegistrationForm from '@/forms/registration.form';
+import LoginForm from '@/forms/login.form';
 
 interface IProps {
     isOpen: boolean;
@@ -11,7 +11,7 @@ interface IProps {
 const LoginModal = ({ isOpen, onClose }: IProps) => {
     return (
         <CustomModal isOpen={isOpen} onClose={onClose} title='Авторизация'>
-            <RegistrationForm onClose={onClose} />
+            <LoginForm onClose={onClose} />
         </CustomModal>
     );
 };
