@@ -1,4 +1,4 @@
-Next.js Prisma
+Next.js Prisma Auth.js HeroUi
 
 ## Getting Started
 
