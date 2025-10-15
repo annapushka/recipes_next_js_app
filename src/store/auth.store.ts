@@ -15,6 +15,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     statuse: 'unauthenticated',
     session: null,
     setAuthState: (statuse: SessionStatus, session: Session | null) => {
+        console.log({ statuse, session });
         set({
             isAuth: statuse === 'authenticated',
             session,

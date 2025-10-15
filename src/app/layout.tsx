@@ -7,6 +7,7 @@ import { siteConfig } from '@/config/site.config';
 import { layoutConfig } from '@/config/layout.config';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/auth/auth';
+import AppLoader from '@/hoc/app-loader';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -37,22 +38,25 @@ export default async function RootLayout({
             >
                 <Providers>
                     <SessionProvider session={session}>
-                        <Header />
-                        <main
-                            className={`flex flex-col w-full justify-start items-center`}
-                            style={{
-                                height: `calc(100vh - ${layoutConfig.headerHeight} - ${layoutConfig.footerHeight})`,
-                            }}
-                        >
-                            {children}
-                        </main>
-                        <footer
-                            className={`flex h-[${layoutConfig.footerHeight}] justify-center`}
-                        >
-                            <p className='text-sm text-gray-500 items-center'>
-                                © {new Date().getFullYear()} {siteConfig.title}
-                            </p>
-                        </footer>
+                        <AppLoader>
+                            <Header />
+                            <main
+                                className={`flex flex-col w-full justify-start items-center`}
+                                style={{
+                                    height: `calc(100vh - ${layoutConfig.headerHeight} - ${layoutConfig.footerHeight})`,
+                                }}
+                            >
+                                {children}
+                            </main>
+                            <footer
+                                className={`flex h-[${layoutConfig.footerHeight}] justify-center`}
+                            >
+                                <p className='text-sm text-gray-500 items-center'>
+                                    © {new Date().getFullYear()}{' '}
+                                    {siteConfig.title}
+                                </p>
+                            </footer>
+                        </AppLoader>
                     </SessionProvider>
                 </Providers>
             </body>

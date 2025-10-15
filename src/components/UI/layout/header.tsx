@@ -33,6 +33,7 @@ export const Logo = () => {
 export default function Header() {
     const pathname = usePathname();
     const { isAuth, session, setAuthState } = useAuthStore();
+    console.log({ isAuth, session });
 
     const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
