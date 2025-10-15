@@ -1,5 +1,3 @@
-'use client';
-
 import { useAuthStore } from '@/store/auth.store';
 import { useSession } from 'next-auth/react';
 
@@ -12,7 +10,7 @@ interface IProps {
 const AppLoader = ({ children }: IProps) => {
     const { data: session, status } = useSession();
     const { setAuthState } = useAuthStore();
-    console.log({ session, status });
+
     useEffect(() => {
         setAuthState(status, session);
     }, [status, session, setAuthState]);
