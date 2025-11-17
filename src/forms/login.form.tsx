@@ -18,6 +18,8 @@ const LoginForm = ({ onClose }: IProps) => {
         e.preventDefault();
         await signInWithCredentials(formData.email, formData.password);
 
+        window.location.reload();
+
         onClose();
     };
 

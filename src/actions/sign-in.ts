@@ -7,13 +7,13 @@ export const signInWithCredentials = async (
     password: string
 ) => {
     try {
-        const result = await signIn('credentials', {
+        await signIn('credentials', {
             email,
             password,
             redirect: false,
         });
 
-        return result;
+        return;
     } catch (error) {
         console.error('Ошибка авторизации:', error);
     }

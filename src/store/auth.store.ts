@@ -5,21 +5,20 @@ type SessionStatus = 'authenticated' | 'unauthenticated' | 'loading';
 
 interface AuthState {
     isAuth: boolean;
-    statuse: SessionStatus;
+    status: SessionStatus;
     session: Session | null;
-    setAuthState: (statuse: SessionStatus, session: Session | null) => void;
+    setAuthState: (status: SessionStatus, session: Session | null) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
     isAuth: false,
-    statuse: 'unauthenticated',
+    status: 'loading',
     session: null,
-    setAuthState: (statuse: SessionStatus, session: Session | null) => {
-        console.log({ statuse, session });
+    setAuthState: (status: SessionStatus, session: Session | null) => {
         set({
-            isAuth: statuse === 'authenticated',
+            isAuth: status === 'authenticated',
             session,
-            statuse,
+            status,
         });
     },
 }));

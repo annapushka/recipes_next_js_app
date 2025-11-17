@@ -32,8 +32,8 @@ export const Logo = () => {
 
 export default function Header() {
     const pathname = usePathname();
-    const { isAuth, session, setAuthState } = useAuthStore();
-    console.log({ isAuth, session });
+    const authStore = useAuthStore();
+    const { isAuth, session, status = 'loading', setAuthState } = authStore;
 
     const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -87,7 +87,9 @@ export default function Header() {
 
             <NavbarContent justify='end'>
                 {isAuth && <p>Привет, {session?.user?.email}!</p>}
-                {!isAuth ? (
+                {status === 'loading' ? (
+                    <p>Загрузка...</p>
+                ) : !isAuth ? (
                     <>
                         <NavbarItem className='hidden lg:flex'>
                             <Button
