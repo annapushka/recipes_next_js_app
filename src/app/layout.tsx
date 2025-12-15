@@ -7,6 +7,7 @@ import { siteConfig } from '@/config/site.config';
 import { layoutConfig } from '@/config/layout.config';
 import { auth } from '@/auth/auth';
 import ClientAuthProvider from '@/providers/client-auth-provider';
+import Title from '@/components/UI/layout/title';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -38,6 +39,7 @@ export default async function RootLayout({
                 <Providers>
                     <ClientAuthProvider session={session}>
                         <Header />
+                        <Title />
                         <main
                             className='flex flex-col w-full justify-start items-center'
                             style={{
