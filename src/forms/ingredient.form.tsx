@@ -125,7 +125,7 @@ const IngredientForm = () => {
                         }}
                         endContent={
                             <span className='absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500'>
-                                Р
+                                ₽
                             </span>
                         }
                         validate={(value) => {
