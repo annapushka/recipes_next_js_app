@@ -7,21 +7,31 @@ import { Input } from '@heroui/input';
 import { Button, Select, SelectItem } from '@heroui/react';
 import { useState } from 'react';
 
+const INITIAL_VALUES = {
+    name: '',
+    category: '',
+    unit: '',
+    pricePerUnit: null as number | null,
+    description: '',
+};
+
 const IngredientForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        category: '',
-        unit: '',
-        pricePerUnit: null as number | null,
-        description: '',
-    });
+    const [formData, setFormData] = useState(INITIAL_VALUES);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (formData: FormData) => {
-        await createIngredient(formData);
+        const result = await createIngredient(formData);
+        if (result.error) {
+            setError(result.error);
+        } else {
+            setFormData(INITIAL_VALUES);
+            setError(null);
+        }
     };
 
     return (
         <Form className='w-[400px]' action={handleSubmit}>
+            {error && <p className='text-red-500'>{error}</p>}
             <Input
                 isRequired
                 name='name'
