@@ -14,8 +14,6 @@ export const createIngredient = async (formData: FormData) => {
                 : null,
             description: formData.get('description') as string,
         };
-
-        console.log({ data });
         const validateData = ingredientSchema.parse(data);
 
         const ingredient = await prisma.ingredient.create({

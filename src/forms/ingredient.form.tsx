@@ -5,23 +5,46 @@ import { CATEGORY_OPTIONS, UNIT_OPTIONS } from '@/constants/select-options';
 import { Form } from '@heroui/form';
 import { Input } from '@heroui/input';
 import { Button, Select, SelectItem } from '@heroui/react';
+import { useState } from 'react';
+
+const initialValues = {
+    name: '',
+    category: '',
+    unit: '',
+    pricePerUnit: null as number | null,
+    description: '',
+};
 
 const IngredientForm = () => {
-    const handleSubmit = async (values: FormData) => {
-        await createIngredient(values);
+    const [error, setError] = useState(null as string | null);
+    const [formData, setFormData] = useState(initialValues);
+
+    const handleSubmit = async (values: unknown) => {
+        const result = await createIngredient(values as FormData);
+        if (result.error) {
+            setError(result.error);
+        } else {
+            setError(null);
+            setFormData(initialValues);
+        }
     };
 
     return (
-        <Form className='w-[400px]' action={handleSubmit}>
+        <Form className='w-[400px]' onSubmit={handleSubmit}>
+            {error && <div className='text-red-500 text-sm mb-2'>{error}</div>}
             <Input
                 isRequired
                 name='name'
                 placeholder='Введите название ингредиента'
                 type='text'
+                value={formData.name}
                 classNames={{
                     inputWrapper: 'bg-default-100',
                     input: 'text-sm focus:outline-none',
                 }}
+                onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                }
                 validate={(value) => {
                     if (!value) return 'Название обязательно';
                     return null;
@@ -33,16 +56,21 @@ const IngredientForm = () => {
                         isRequired
                         name='category'
                         placeholder='Категория'
+                        selectedKeys={
+                            formData.category ? [formData.category] : []
+                        }
                         classNames={{
                             trigger: 'bg-default-100 w-full',
                             innerWrapper: 'text-sm',
                             value: 'truncate',
                             selectorIcon: 'text-black',
                         }}
-                        validate={(value) => {
-                            if (!value) return 'Категория обязательна';
-                            return null;
-                        }}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                category: e.target.value,
+                            })
+                        }
                     >
                         {CATEGORY_OPTIONS.map((option) => (
                             <SelectItem
@@ -59,16 +87,19 @@ const IngredientForm = () => {
                         isRequired
                         name='unit'
                         placeholder='Ед. изм.'
+                        selectedKeys={formData.unit ? [formData.unit] : []}
                         classNames={{
                             trigger: 'bg-default-100 w-full',
                             innerWrapper: 'text-sm',
                             value: 'truncate',
                             selectorIcon: 'text-black',
                         }}
-                        validate={(value) => {
-                            if (!value) return 'Ед. изм. обязательна';
-                            return null;
-                        }}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                unit: e.target.value,
+                            })
+                        }
                     >
                         {UNIT_OPTIONS.map((option) => (
                             <SelectItem
@@ -86,9 +117,20 @@ const IngredientForm = () => {
                         name='pricePerUnit'
                         placeholder='Цена'
                         type='number'
+                        value={
+                            formData.pricePerUnit !== null
+                                ? formData.pricePerUnit.toString()
+                                : ''
+                        }
                         classNames={{
                             inputWrapper: 'bg-default-100',
                             input: 'text-sm focus:outline-none',
+                        }}
+                        onChange={(e) => {
+                            const value = e.target.value
+                                ? parseFloat(e.target.value)
+                                : null;
+                            setFormData({ ...formData, pricePerUnit: value });
                         }}
                         endContent={
                             <span className='absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500'>
@@ -110,10 +152,14 @@ const IngredientForm = () => {
                 name='description'
                 placeholder='Введите описание (необязательно)'
                 type='text'
+                value={formData.description}
                 classNames={{
                     inputWrapper: 'bg-default-100',
                     input: 'text-sm focus:outline-none',
                 }}
+                onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                }
             />
             <div className='flex w-full items-center justify-end'>
                 <Button color='primary' type='submit'>
