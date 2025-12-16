@@ -2,8 +2,8 @@
 
 import { siteConfig } from '@/config/site.config';
 import { usePathname } from 'next/navigation';
-import DOMPurify from 'dompurify';
-import parse from 'html-react-parser';
+
+import { SanitizedContent } from './sanitized-content';
 
 const PageContent = () => {
     const pathname = usePathname();
@@ -13,13 +13,14 @@ const PageContent = () => {
         ];
 
     if (!pageContent) {
-        return <div>Страница не найдена</div>;
+        return <div className='text-center py-8'>Страница не найдена</div>;
     }
 
-    const cleanHTML = DOMPurify.sanitize(pageContent.content);
-    const parsedContent = parse(cleanHTML);
-
-    return <div>{parsedContent}</div>;
+    return (
+        <div>
+            <SanitizedContent content={pageContent.content} />
+        </div>
+    );
 };
 
 export default PageContent;
