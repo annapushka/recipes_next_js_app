@@ -26,9 +26,11 @@ const IngredientForm = () => {
             const result = await createIngredient(formData);
             if (result.error) {
                 setError(result.error);
+                alert('❌ Ошибка при создании ингридиента');
             } else {
                 setFormData(INITIAL_VALUES);
                 setError(null);
+                alert('✅ Успешное создание ингридиента');
             }
         });
     };
