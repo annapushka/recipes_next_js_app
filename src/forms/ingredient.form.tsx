@@ -1,7 +1,7 @@
 'use client';
 
-import { createIngredient } from '@/actions/ingredient';
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from '@/constants/select-options';
+import { useIngredientStore } from '@/store/ingredient.store';
 import { Form } from '@heroui/form';
 import { Input } from '@heroui/input';
 import { Button, Select, SelectItem } from '@heroui/react';
@@ -18,14 +18,16 @@ const INITIAL_VALUES = {
 const IngredientForm = () => {
     const [formData, setFormData] = useState(INITIAL_VALUES);
     const [error, setError] = useState<string | null>(null);
-
+    const { addIngredient } = useIngredientStore();
     const [isPending, startTransition] = useTransition();
 
     const handleSubmit = async (formData: FormData) => {
         startTransition(async () => {
-            const result = await createIngredient(formData);
-            if (result.error) {
-                setError(result.error);
+            await addIngredient(formData);
+            const error = useIngredientStore.getState().error;
+
+            if (error) {
+                setError(error);
                 alert('❌ Ошибка при создании ингридиента');
             } else {
                 setFormData(INITIAL_VALUES);
