@@ -38,23 +38,23 @@ export default async function RootLayout({
             >
                 <Providers>
                     <ClientAuthProvider session={session}>
-                        <Header />
-                        <Title />
-                        <main
-                            className='flex flex-col max-w-[1024px] mx-auto px-[24px] justify-start items-center'
-                            style={{
-                                height: `calc(100vh - ${layoutConfig.headerHeight} - ${layoutConfig.footerHeight})`,
-                            }}
-                        >
-                            {children}
-                        </main>
-                        <footer
-                            className={`flex h-[${layoutConfig.footerHeight}] justify-center`}
-                        >
-                            <p className='text-sm text-gray-500 items-center'>
-                                © {new Date().getFullYear()} {siteConfig.title}
-                            </p>
-                        </footer>
+                        <div className='flex min-h-screen flex-col justify-between'>
+                            <div className='flex flex-col'>
+                                <Header />
+                                <main className='flex flex-col max-w-[1024px] mx-auto px-[24px] justify-start items-center'>
+                                    <Title />
+                                    {children}
+                                </main>
+                            </div>
+                            <footer
+                                className={`flex h-[${layoutConfig.footerHeight}] justify-center`}
+                            >
+                                <p className='text-sm text-gray-500 items-center'>
+                                    © {new Date().getFullYear()}{' '}
+                                    {siteConfig.title}
+                                </p>
+                            </footer>
+                        </div>
                     </ClientAuthProvider>
                 </Providers>
             </body>

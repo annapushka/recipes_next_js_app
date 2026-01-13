@@ -28,17 +28,15 @@ const IngredientForm = () => {
 
             if (error) {
                 setError(error);
-                alert('❌ Ошибка при создании ингридиента');
             } else {
                 setFormData(INITIAL_VALUES);
                 setError(null);
-                alert('✅ Успешное создание ингридиента');
             }
         });
     };
 
     return (
-        <Form className='w-[400px]' action={handleSubmit}>
+        <Form className='w-full' action={handleSubmit}>
             {error && <p className='text-red-500'>{error}</p>}
             <Input
                 isRequired

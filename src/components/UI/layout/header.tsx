@@ -48,15 +48,20 @@ export default function Header() {
     };
 
     const getNavItems = () => {
-        return siteConfig.navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-                <NavbarItem key={item.href}>
-                    <Link
-                        href={item.href}
-                        className={`px-3 py-1 ${
-                            isActive ? 'text-blue-500' : 'text-foreground'
-                        }
+        return siteConfig.navItems
+            .filter((item) => {
+                if (item.href === '/ingredients' && !isAuth) return false;
+                return true;
+            })
+            .map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                    <NavbarItem key={item.href}>
+                        <Link
+                            href={item.href}
+                            className={`px-3 py-1 ${
+                                isActive ? 'text-blue-500' : 'text-foreground'
+                            }
                         hover:text-blue-300
                         hover:border
                         hover:border-blue-300
@@ -64,12 +69,12 @@ export default function Header() {
                         transition-colors
                         transition-border
                         duration-200`}
-                    >
-                        {item.label}
-                    </Link>
-                </NavbarItem>
-            );
-        });
+                        >
+                            {item.label}
+                        </Link>
+                    </NavbarItem>
+                );
+            });
     };
 
     return (

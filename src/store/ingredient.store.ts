@@ -12,7 +12,7 @@ interface IngredientState {
     error: string | null;
     loadIngredients: () => Promise<void>;
     addIngredient: (formData: FormData) => Promise<void>;
-    removeIngredient: (id: number) => Promise<void>;
+    removeIngredient: (id: string) => Promise<void>;
 }
 
 export const useIngredientStore = create<IngredientState>((set) => ({
@@ -50,14 +50,14 @@ export const useIngredientStore = create<IngredientState>((set) => ({
             set({ error: 'Ошибка добавления ингредиента', isLoading: false });
         }
     },
-    removeIngredient: async (id: number) => {
+    removeIngredient: async (id: string) => {
         set({ isLoading: true, error: null });
         try {
-            const result = await deleteIngredient(id.toString());
+            const result = await deleteIngredient(id);
             if (result.success) {
                 set((state) => ({
                     ingredients: state.ingredients.filter(
-                        (ingredient) => ingredient.id !== id.toString()
+                        (ingredient) => ingredient.id !== id
                     ),
                     isLoading: false,
                 }));
