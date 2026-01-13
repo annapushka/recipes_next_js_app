@@ -3,7 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const middleware = async (request: NextRequest) => {
     const { pathname } = request.nextUrl;
-    const token = await getToken({ req: request });
+    const secret = process.env.AUTH_SECRET;
+    if (!secret) {
+        throw new Error('Missing AUTH_SECRET environment variable');
+    }
+    const token = await getToken({ req: request, secret });
     const protectedRoutes = ['/ingredients'];
 
     if (protectedRoutes.some((route) => pathname.startsWith(route))) {
