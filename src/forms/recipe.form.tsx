@@ -68,6 +68,21 @@ const RecipeForm = ({ initialRecipe }: RecipeFormProps) => {
             );
         }
     };
+
+    const handleIngredientChange = (
+        id: number,
+        field: keyof IIngredientField,
+        value: string | number | null,
+    ) => {
+        setIngredientFields(
+            ingredientFields.map((fieldItem) =>
+                fieldItem.id === id
+                    ? { ...fieldItem, [field]: value }
+                    : fieldItem,
+            ),
+        );
+    };
+
     const handleSubmit = async (formData: FormData) => {
         startTransition(async () => {
             setError(null);
