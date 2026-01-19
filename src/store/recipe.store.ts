@@ -7,13 +7,19 @@ import {
 import { IRecipe } from '@/types/recipe';
 import { create } from 'zustand';
 
+interface IResult {
+    success: boolean;
+    error?: string;
+    recipe?: IRecipe;
+}
+
 interface IRecipeState {
     recipes: IRecipe[];
     isLoading: boolean;
     error: string | null;
     loadRecipes: () => Promise<void>;
-    addRecipe: (formData: FormData) => Promise<void>;
-    updateRecipe: (id: string, formData: FormData) => Promise<void>;
+    addRecipe: (formData: FormData) => Promise<IResult>;
+    updateRecipe: (id: string, formData: FormData) => Promise<IResult>;
     removeRecipe: (id: string) => Promise<void>;
 }
 
@@ -44,12 +50,15 @@ export const useRecipeStore = create<IRecipeState>((set) => ({
                     recipes: [...state.recipes, result.recipe!],
                     isLoading: false,
                 }));
+                return { success: true, recipe: result.recipe };
             } else {
                 set({ error: result.error, isLoading: false });
+                return { success: false, error: result.error };
             }
         } catch (error) {
             console.error('Error adding recipe:', error);
             set({ error: 'Ошибка при добавлении рецепта', isLoading: false });
+            return { success: false, error: 'Ошибка при добавлении рецепта' };
         }
     },
     updateRecipe: async (id: string, formData: FormData) => {
@@ -63,12 +72,15 @@ export const useRecipeStore = create<IRecipeState>((set) => ({
                     ),
                     isLoading: false,
                 }));
+                return { success: true, recipe: result.recipe };
             } else {
                 set({ error: result.error, isLoading: false });
+                return { success: false, error: result.error };
             }
         } catch (error) {
             console.error('Error updating recipe:', error);
             set({ error: 'Ошибка при обновлении рецепта', isLoading: false });
+            return { success: false, error: 'Ошибка при обновлении рецепта' };
         }
     },
     removeRecipe: async (id: string) => {
