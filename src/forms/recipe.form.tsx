@@ -1,6 +1,9 @@
 import { useIngredientStore } from '@/store/ingredient.store';
 import { useRecipeStore } from '@/store/recipe.store';
 import { IRecipe } from '@/types/recipe';
+import { Form } from '@heroui/form';
+import { Input } from '@heroui/input';
+import { Select, SelectItem } from '@heroui/react';
 import { useRouter } from 'next/router';
 import { useState, useTransition } from 'react';
 
@@ -105,4 +108,87 @@ const RecipeForm = ({ initialRecipe }: RecipeFormProps) => {
             }
         });
     };
+
+    return (
+        <Form className='w-[450px]' action={handleSubmit}>
+            {error && <p className='text-red-500 mb-4'>{error}</p>}
+            <Input
+                isRequired
+                name='name'
+                placeholder='Введите название рецепта'
+                type='text'
+                value={formData.name}
+                classNames={{
+                    innerWrapper: 'bg-default-100',
+                    input: 'text-sm focus:outline-none',
+                }}
+                onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                }
+                validate={(value) => (!value ? 'Название обязательно' : null)}
+            />
+            <Input
+                name='description'
+                placeholder='Описание рецепта (необязательное)'
+                type='text'
+                value={formData.description}
+                classNames={{
+                    innerWrapper: 'bg-default-100',
+                    input: 'text-sm focus:outline-none',
+                }}
+                onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                }
+            />
+            <Input
+                name='imageUrl'
+                placeholder='URL изображения (необязательное)'
+                type='text'
+                value={formData.imageUrl}
+                classNames={{
+                    innerWrapper: 'bg-default-100',
+                    input: 'text-sm focus:outline-none',
+                }}
+                onChange={(e) =>
+                    setFormData({ ...formData, imageUrl: e.target.value })
+                }
+            />
+            <div className='space-y-2 w-full'>
+                {ingredientFields.map((field, index) => (
+                    <div key={field.id} className='flex gap-2 items-center'>
+                        <Select
+                            isRequired
+                            name={`ingredient_${index}`}
+                            placeholder='Выберите ингредиент'
+                            selectedKeys={
+                                field.ingredientId ? [field.ingredientId] : []
+                            }
+                            classNames={{
+                                trigger: 'bg-default-100 w-full',
+                                innerWrapper: 'text-sm',
+                                value: 'truncate',
+                                selectorIcon: 'text-black',
+                            }}
+                            onChange={(e) =>
+                                handleIngredientChange(
+                                    field.id,
+                                    'ingredientId',
+                                    e.target.value,
+                                )
+                            }
+                        >
+                            {ingredients.map((ingredient) => (
+                                <SelectItem
+                                    key={ingredient.id}
+                                    className='text-black'
+                                >
+                                    {ingredient.name}
+                                </SelectItem>
+                            ))}
+                        </Select>
+                    </div>
+                ))}
+            </div>
+        </Form>
+    );
 };
