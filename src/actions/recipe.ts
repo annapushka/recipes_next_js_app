@@ -1,3 +1,5 @@
+'use server';
+
 import { prisma } from '@/utils/prisma';
 
 export const getRecipes = async () => {
@@ -11,20 +13,20 @@ export const getRecipes = async () => {
                 },
             },
         });
-        
-        const transformedRecipes = recipes.map(recipe => ({
+
+        const transformedRecipes = recipes.map((recipe) => ({
             id: recipe.id,
             name: recipe.name,
             description: recipe.description,
             imageUrl: recipe.imageUrl,
-            ingredients: recipe.recipeIngredients.map(ri => ({
+            ingredients: recipe.recipeIngredients.map((ri) => ({
                 id: ri.id,
                 ingredientId: ri.ingredientId,
                 quantity: ri.quantity,
-                ingredient: ri.ingredient
-            }))
+                ingredient: ri.ingredient,
+            })),
         }));
-        
+
         return { success: true, recipes: transformedRecipes };
     } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -68,20 +70,20 @@ export const createRecipe = async (formData: FormData) => {
                 },
             },
         });
-        
+
         const transformedRecipe = {
             id: recipe.id,
             name: recipe.name,
             description: recipe.description,
             imageUrl: recipe.imageUrl,
-            ingredients: recipe.recipeIngredients.map(ri => ({
+            ingredients: recipe.recipeIngredients.map((ri) => ({
                 id: ri.id,
                 ingredientId: ri.ingredientId,
                 quantity: ri.quantity,
-                ingredient: ri.ingredient
-            }))
+                ingredient: ri.ingredient,
+            })),
         };
-        
+
         return { success: true, recipe: transformedRecipe };
     } catch (error) {
         console.error('Error create recipe:', error);
@@ -127,20 +129,20 @@ export const updateRecipe = async (id: string, formData: FormData) => {
                 },
             },
         });
-        
+
         const transformedRecipe = {
             id: recipe.id,
             name: recipe.name,
             description: recipe.description,
             imageUrl: recipe.imageUrl,
-            ingredients: recipe.recipeIngredients.map(ri => ({
+            ingredients: recipe.recipeIngredients.map((ri) => ({
                 id: ri.id,
                 ingredientId: ri.ingredientId,
                 quantity: ri.quantity,
-                ingredient: ri.ingredient
-            }))
+                ingredient: ri.ingredient,
+            })),
         };
-        
+
         return { success: true, recipe: transformedRecipe };
     } catch (error) {
         console.error('Error update recipe:', error);

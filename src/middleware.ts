@@ -8,9 +8,13 @@ export const middleware = async (request: NextRequest) => {
         throw new Error('Missing AUTH_SECRET environment variable');
     }
     const token = await getToken({ req: request, secret });
-    const protectedRoutes = ['/ingredients'];
+    const protectedRoutes = ['/ingredients', '/recipes/new', '/recipes/:path*'];
 
-    if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    if (
+        protectedRoutes.some((route) =>
+            pathname.startsWith(route.replace(':path*', '')),
+        )
+    ) {
         if (!token) {
             const url = new URL('/error', request.url);
             url.searchParams.set('message', 'Недостаточно прав');
@@ -21,5 +25,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-    matcher: ['/ingredients'],
+    matcher: ['/ingredients', '/recipes/new', '/recipes/:path*'],
 };

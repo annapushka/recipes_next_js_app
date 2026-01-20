@@ -1,3 +1,5 @@
+'use client';
+
 import { useIngredientStore } from '@/store/ingredient.store';
 import { useRecipeStore } from '@/store/recipe.store';
 import { IRecipe } from '@/types/recipe';

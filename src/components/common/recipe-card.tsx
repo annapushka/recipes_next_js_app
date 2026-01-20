@@ -1,7 +1,10 @@
+'use client';
+
 import { UNIT_ABBREVIATIONS } from '@/constants/select-options';
 import { useRecipeStore } from '@/store/recipe.store';
 import { IRecipe } from '@/types/recipe';
-import { Button, Card, CardBody, CardHeader, Image } from '@heroui/react';
+import { Button, Card, CardBody, CardHeader } from '@heroui/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useTransition } from 'react';
 
@@ -34,7 +37,8 @@ const RecipeCard: FC<RecipeCardProps> = ({ recipe }) => {
                     <Image
                         src={recipe.imageUrl}
                         alt='image for recipe'
-                        className='w-full h-full object-cover transition-transform duration-300'
+                        fill
+                        className='object-cover transition-transform duration-300'
                     />
                 ) : (
                     <div className='bg-gray-200 border-2 w-full h-full flex items-center justify-center'>
