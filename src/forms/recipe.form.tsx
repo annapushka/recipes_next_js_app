@@ -186,6 +186,36 @@ const RecipeForm = ({ initialRecipe }: RecipeFormProps) => {
                                 </SelectItem>
                             ))}
                         </Select>
+                        <Input
+                            isRequired
+                            name={`quantity_${index}`}
+                            placeholder='Количество'
+                            type='number'
+                            value={
+                                field.quantity !== null
+                                    ? field.quantity.toString()
+                                    : ''
+                            }
+                            classNames={{
+                                inputWrapper: 'bg-default-100 w-full',
+                                input: 'text-sm focus:outline-none',
+                            }}
+                            className='w-[100px]'
+                            onChange={(e) =>
+                                handleIngredientChange(
+                                    field.id,
+                                    'quantity',
+                                    e.target.value
+                                        ? parseFloat(e.target.value)
+                                        : null,
+                                )
+                            }
+                            validate={(value) =>
+                                !value || parseFloat(value) <= 0
+                                    ? 'Количество должно быть больше 0'
+                                    : null
+                            }
+                        />
                     </div>
                 ))}
             </div>
