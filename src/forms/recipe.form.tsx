@@ -3,7 +3,7 @@ import { useRecipeStore } from '@/store/recipe.store';
 import { IRecipe } from '@/types/recipe';
 import { Form } from '@heroui/form';
 import { Input } from '@heroui/input';
-import { Select, SelectItem } from '@heroui/react';
+import { Button, Select, SelectItem } from '@heroui/react';
 import { useRouter } from 'next/router';
 import { useState, useTransition } from 'react';
 
@@ -216,9 +216,37 @@ const RecipeForm = ({ initialRecipe }: RecipeFormProps) => {
                                     : null
                             }
                         />
+                        {ingredientFields.length > 1 && (
+                            <Button
+                                color='danger'
+                                variant='light'
+                                onPress={() =>
+                                    handleRemoveIngredientField(field.id)
+                                }
+                                className='w-[50px]'
+                            >
+                                Удалить
+                            </Button>
+                        )}
                     </div>
                 ))}
+                {ingredientFields.length < 10 && (
+                    <Button
+                        color='primary'
+                        variant='flat'
+                        onPress={handleAddIngredientField}
+                    >
+                        Добавить ингредиент
+                    </Button>
+                )}
+            </div>
+            <div className='flex w-full items-center jusify-end mt-4'>
+                <Button color='primary' type='submit' isLoading={isPending}>
+                    {initialRecipe ? 'Сохранить изменения' : 'Добавить рецепт'}
+                </Button>
             </div>
         </Form>
     );
 };
+
+export default RecipeForm;
