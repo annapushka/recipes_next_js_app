@@ -1,13 +1,26 @@
-import { getToken } from 'next-auth/jwt';
+import { getToken, GetTokenParams } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const middleware = async (request: NextRequest) => {
     const { pathname } = request.nextUrl;
     const secret = process.env.AUTH_SECRET;
+
     if (!secret) {
         throw new Error('Missing AUTH_SECRET environment variable');
     }
-    const token = await getToken({ req: request, secret });
+
+    let params: GetTokenParams = {
+        req: request,
+        secret,
+    };
+    if (process.env.NODE_ENV === 'production') {
+        params = {
+            ...params,
+            cookieName: '__Secure-authjs.session-token',
+        };
+    }
+
+    const token = await getToken(params);
     const protectedRoutes = ['/ingredients', '/recipes/new', '/recipes/:path*'];
 
     if (
