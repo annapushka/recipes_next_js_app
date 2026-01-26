@@ -32,7 +32,7 @@ const RecipeCard: FC<RecipeCardProps> = ({ recipe }) => {
     };
     return (
         <Card className='w-full max-w-md h-[480px] flex flex-col'>
-            <div className='h-48 overflow-hidden'>
+            <div className='relative h-48 overflow-hidden'>
                 {recipe?.imageUrl ? (
                     <Image
                         src={recipe.imageUrl}

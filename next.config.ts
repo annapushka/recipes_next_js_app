@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'eda.ru',
+                hostname: 'eda.rambler.ru',
             },
         ],
     },
