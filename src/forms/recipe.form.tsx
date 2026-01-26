@@ -6,7 +6,7 @@ import { IRecipe } from '@/types/recipe';
 import { Form } from '@heroui/form';
 import { Input } from '@heroui/input';
 import { Button, Select, SelectItem } from '@heroui/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
 interface RecipeFormProps {

@@ -41,8 +41,8 @@ const RecipeCard: FC<RecipeCardProps> = ({ recipe }) => {
                         className='object-cover transition-transform duration-300'
                     />
                 ) : (
-                    <div className='bg-gray-200 border-2 w-full h-full flex items-center justify-center'>
-                        <span className='text-gray-500'>Нет изобравжения</span>
+                    <div className='bg-gray-200 w-full h-full flex items-center justify-center'>
+                        <span className='text-gray-500'>Нет изображения</span>
                     </div>
                 )}
             </div>
